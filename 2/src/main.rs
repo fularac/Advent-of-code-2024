@@ -108,8 +108,8 @@ fn still_safe_part2(
     } else {
         let mut safe = false;
 
-        // Test excluding self
-        if cur_temp_index != 0 {
+        // Test excluding cur_temp
+        if cur_temp_index > 1 {
             // Test with n - 1
             safe |= still_safe_part2(
                 cur_temp_index - 1,
@@ -118,15 +118,20 @@ fn still_safe_part2(
                 assending,
                 true,
             );
-        } else {
-            // Skip first element
+        }
+        if cur_temp_index == 1 {
+            // Skip second element
             safe |= still_safe_part2(
-                next_temp_index,
+                cur_temp_index - 1,
                 next_temp_index + 1,
                 remaining,
-                assending,
+                None,
                 true,
             )
+        }
+        if cur_temp_index == 0 {
+            // Skip first element
+            safe |= still_safe_part2(next_temp_index, next_temp_index + 1, remaining, None, true)
         }
         // Test excluding next temp
         safe |= still_safe_part2(
@@ -186,7 +191,8 @@ mod test {
 8 6 4 4 1
 1 6 7 8 9
 1 2 3 4 9
-74 77 78 81 79 80"
+74 77 78 81 79 80
+9 10 7 6"
             .split_terminator("\n")
             .map(|s| {
                 s.split_whitespace()
