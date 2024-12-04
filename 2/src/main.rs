@@ -90,6 +90,7 @@ fn still_safe_part2(
         remaining[next_temp_index],
         assending,
     );
+    #[cfg(test)]
     println!(
         "{} -> {}. safe({}) cur_assending({}) assending({:?})",
         remaining[cur_temp_index], remaining[next_temp_index], safe, cur_assending, assending
